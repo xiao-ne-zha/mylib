@@ -1,0 +1,7 @@
+node_modules/
+.cpcache
+.shadow-cljs/
+public/js/
+public-test/
+.DS_Store
+.nrepl-port
