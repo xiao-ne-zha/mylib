@@ -1,4 +1,4 @@
-{:deps {:aliases [:cljs]}
+{:deps true
  :nrepl {:port 9000}
 
  :builds {:mylib {:target :browser
