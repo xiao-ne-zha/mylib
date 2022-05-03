@@ -1,9 +1,6 @@
-{:source-paths ["src/cljs"]
+{:deps {:aliases [:cljs]}
  :nrepl {:port 9000}
- :dependencies [[cider/cider-nrepl "0.21.0"]
-                [cljs-ajax "0.8.4"]
-                [lilactown/helix "0.1.5"]
-                [com.lambdaisland/glogi "1.1.144"]]
+
  :builds {:mylib {:target :browser
                   :compile-options {:output-feature-set :es6}
                   :asset-path "/js"
