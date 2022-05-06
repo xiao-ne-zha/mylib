@@ -13,15 +13,14 @@
 
 #?(:clj
    (do
+     (defmacro ^:private log-impl [level level-name body]
+       `(when (>= ~level @log-level)
+          (js/console.log (get-now) ~(name level-name) ~@body)))
      (defmacro debug [& body]
-       `(when (>= 0 @log-level)
-          (js/console.log (get-now) "DEBUG" ~@body)))
+       `(log-impl 0 DEBUG ~body))
      (defmacro info [& body]
-       `(when (>= 1 @log-level)
-          (js/console.log (get-now) "INFO" ~@body)))
+       `(log-impl 1 INFO ~body))
      (defmacro warn [& body]
-       `(when (>= 2 @log-level)
-          (js/console.log (get-now) "WARN" ~@body)))
+       `(log-impl 2 WARN ~body))
      (defmacro error [& body]
-       `(when (>= 3 @log-level)
-          (js/console.log (get-now) "ERROR" ~@body)))))
+       `(log-impl 3 ERROR ~body))))
