@@ -1,6 +1,6 @@
 (ns mylib.log
   #?(:cljs (:require ["moment" :as moment]))
-  #?(:cljs (:require-macros [contacts.log])))
+  #?(:cljs (:require-macros [mylib.log])))
 
 #?(:cljs
    (do
