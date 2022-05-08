@@ -5,3 +5,4 @@ public/js/
 public-test/
 .DS_Store
 .nrepl-port
+target/
