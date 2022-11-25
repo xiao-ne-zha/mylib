@@ -4,5 +4,5 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v20.html"}
   :source-paths ["src" "resources"]
-  :dependencies []
+  ;; :dependencies [[lilactown/helix "0.1.8"]]
   )
