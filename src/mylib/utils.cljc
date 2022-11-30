@@ -1,5 +1,6 @@
 (ns mylib.utils
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [oops.core :as oc]))
 
 (defn- map-to-names [names m dedupe]
   (reduce
@@ -28,3 +29,7 @@
 
 (defn classnames [& args]
   (inter-classnames false args))
+
+(defn oget+ [o k]
+  (try (oc/oget+ o k)
+       (catch js/Error e)))

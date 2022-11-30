@@ -1,2 +1,3 @@
 {:paths ["src"]
- :deps {lilactown/helix {:mvn/version "0.1.5"}}}
+ :deps {lilactown/helix {:mvn/version "0.1.9"}
+        binaryage/oops {:mvn/version "0.7.2"}}}
