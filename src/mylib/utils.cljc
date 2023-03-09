@@ -1,35 +1,35 @@
 (ns mylib.utils
   (:require [clojure.string :as str]
-            [oops.core :as oc]))
+            [goog.string :as gstring]
+            ["tailwind-merge" :refer [twMerge]]))
 
-(defn- map-to-names [names m dedupe]
+(defn- map-to-names [m]
   (reduce
    (fn [result [k v]]
      (let [k (name k)]
        (if v
          (conj result k)
-         (if dedupe
-           (filterv #(not= k %) result)
-           result))))
-   names
+         result)))
+   []
    m))
 
-(defn- inter-classnames [dedupe args]
-  (str/join
-   " "
+(defn classnames [& args]
+  (apply twMerge
    (reduce
     (fn [result arg]
       (cond
-        (or (string? arg) (symbol? arg)    (keyword? arg)) (conj result (name arg))
-        (or (vector? arg) (list? arg))     (vec (concat result arg))
-        (map? arg) (map-to-names result arg dedupe)
+        (or (string? arg) (symbol? arg) (keyword? arg))
+        (conj result (name arg))
+
+        (or (vector? arg) (list? arg))
+        (conj result (apply classnames arg))
+
+        (map? arg)
+        (vec (concat result (map-to-names arg)))
+
         :else result))
     []
     args)))
 
-(defn classnames [& args]
-  (inter-classnames false args))
-
-(defn oget+ [o k]
-  (try (oc/oget+ o k)
-       (catch js/Error e)))
+(defn format [fmt & args]
+  (apply gstring/format fmt args))

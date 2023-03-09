@@ -1,9 +1,8 @@
 (ns mylib.react
-  (:require ["react" :refer [forwardRef]]
-            [goog.string :as gstring])
+  (:require [helix.core :as h])
   (:require-macros [mylib.react]))
 
-(def forward-ref forwardRef)
-
-(defn format [fmt & args]
-  (apply gstring/format fmt args))
+(def ^:private react (h/get-react))
+(def forward-ref (.-forwardRef react))
+(def clone-element (.-cloneElement react))
+(def valid-element? (.-isValidElement react))

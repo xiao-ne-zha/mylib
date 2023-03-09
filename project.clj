@@ -1,4 +1,4 @@
-(defproject org.clojars.xiao-ne-zha/mylib "0.1.0-SNAPSHOT"
+(defproject org.clojars.xiao-ne-zha/mylib "0.1.2-SNAPSHOT"
   :description "my clojurescript client library"
   :url "https://github.com/xiao-ne-zha/mylib"
   :license {:name "Eclipse Public License"

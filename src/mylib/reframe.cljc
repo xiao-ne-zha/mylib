@@ -1,5 +1,5 @@
 (ns mylib.reframe
-  #?(:cljs (:require [lambdaisland.glogi :as log]
+  #?(:cljs (:require [mylib.log :as log]
                      ["recoil" :as rc]))
   #?(:cljs (:require-macros [mylib.reframe])))
 

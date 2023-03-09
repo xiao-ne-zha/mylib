@@ -1,13 +1,49 @@
 (ns mylib.react
   (:require [helix.core :as h]))
 
-(defmacro defnc [component-name args & body]
-  (let [comp-ref-name (symbol (str component-name "-ref"))]
-    (if (< (count args) 2)
-      `(h/defnc ~component-name ~args ~@body)
-      `(do
-         (h/defnc ~comp-ref-name ~args ~@body)
-         (def ~component-name (forward-ref ~comp-ref-name))))))
+(defmacro defnc [comp-name argv & body]
+  (let [comp-ref-name (symbol (str comp-name "-ref"))
+        argc (count argv)
+        args (first argv)
+        ks (get args :keys)
+        ks (map keyword ks)
+        strs (get args :strs)
+        dissoc-ks (concat ks strs)
+        as-name (get args :as)
+        opts? (map? (first body)) ;; whether an opts map was passed in
+        opts (if opts?
+               (first body)
+               {})
+        body (if opts?
+               (rest body)
+               body)]
+    (if (= 0 argc)
+      `(h/defnc ~comp-name [] ~@body)
+      (if as-name
+        (if (= 1 argc)
+            ;; argc = 1 ...
+          `(h/defnc ~comp-name ~argv
+             ~opts
+             (let [~as-name (dissoc ~as-name ~@dissoc-ks)]
+               ~@body))
+            ;; argc = 2 ， 需要转发引用
+          `(do
+             (h/defnc ~comp-ref-name ~argv
+               ~opts
+               (let [~as-name (dissoc ~as-name ~@dissoc-ks)]
+                 ~@body))
+             (def ~comp-name (forward-ref ~comp-ref-name))))
+          ;; 没有通过as取剩余参数时
+        (if (= 1 argc)
+          `(h/defnc ~comp-name ~argv
+             ~opts
+             ~@body)
+            ;; argc = 2 , 需要转发引用
+          `(do
+             (h/defnc ~comp-ref-name ~argv
+               ~opts
+               ~@body)
+             (def ~comp-name (forward-ref ~comp-ref-name))))))))
 
 (defn- destructure-js [bindings]
   (let [bents (partition 2 bindings)
